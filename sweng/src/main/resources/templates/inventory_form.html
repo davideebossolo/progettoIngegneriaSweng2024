@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1 th:text="${inventory.id == null ? 'New Inventory' : 'Edit Inventory'}"></h1>
+<form th:action="@{/inventories}" th:object="${inventory}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+    </div>
+    <div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" th:field="*{quantity}" />
+    </div>
+    <div>
+        <button type="submit">Save</button>
+    </div>
+</form>
+</body>
+</html>
