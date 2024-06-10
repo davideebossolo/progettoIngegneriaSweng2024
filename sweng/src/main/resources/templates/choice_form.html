@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Choice</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1 th:text="${choice.id == null ? 'New Choice' : 'Edit Choice'}"></h1>
+<form th:action="@{/scenarios/{id}/addChoice(id=${scenario.id})}" th:object="${choice}" method="post">
+  <input type="hidden" th:field="*{id}" />
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}"></textarea>
+  </div>
+  <div>
+    <label for="nextScenario">Next Scenario:</label>
+    <textarea id="nextScenario" th:field="*{nextScenario.description}"></textarea>
+  </div>
+  <div>
+    <button type="submit">Save</button>
+  </div>
+</form>
+<a th:href="@{/scenarios/view/{id}(id=${scenario.id})}">Back to Scenario</a>
+</body>
+</html>

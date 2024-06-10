@@ -22,11 +22,16 @@ public class ItemService {
         return itemRepository.findById(id);
     }
 
-    public Item save(Item item) {
-        return itemRepository.save(item);
+    public Optional<Item> findByName(String name) {
+        return itemRepository.findByName(name);
+    }
+
+    public void save(Item item) {
+        itemRepository.save(item);
     }
 
     public void deleteById(Long id) {
         itemRepository.deleteById(id);
     }
 }
+

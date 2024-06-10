@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Story</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1 th:text="${story.title}">Story Title</h1>
+<div>
+    <p th:text="${rootScenario.description}">Start Scenario Description</p>
+    <a th:href="@{/scenarios/view/{id}(id=${rootScenario.id})}">View Start Scenario</a>
+</div>
+<h2>Scenarios:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Current Scenario</th>
+        <th>Choice Description</th>
+        <th>Next Scenario</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="scenario : ${scenarios}">
+        <td th:text="${scenario.description}">Scenario Description</td>
+        <td>
+            <table>
+                <tbody>
+                <tr th:each="choice : ${scenario.choices}">
+                    <td th:text="${choice.description}">Choice Description</td>
+                    <td th:text="${choice.getNextScenario != null ? choice.getNextScenario.description : 'N/A'}">Next Scenario Description</td>
+                    <td><a th:href="@{/scenarios/view/{id}(id=${choice.getNextScenario != null ? choice.getNextScenario.id : ''})}">View Next Scenario</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/scenarios/new}" class="button">Add New Scenario</a>
+<br>
+<a th:href="@{/stories}">Back to Stories</a>
+</body>
+</html>

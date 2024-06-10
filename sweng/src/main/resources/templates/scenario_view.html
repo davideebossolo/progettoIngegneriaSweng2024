@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>View Scenario</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1 th:text="${scenario.description}">Scenario Description</h1>
+<div>
+  <h2>Choices:</h2>
+  <ul>
+    <li th:each="choice : ${scenario.choices}">
+      <span th:text="${choice.description}">Choice Description</span>
+      <a th:href="@{/scenarios/view/{id}(id=${choice.nextScenario.id})}">Go to Scenario</a>
+    </li>
+  </ul>
+</div>
+<a th:href="@{/scenarios/{id}/addChoice(id=${scenario.id})}" class="button">Add New Choice</a>
+<br>
+<a th:href="@{/scenarios}">Back to Scenarios</a>
+</body>
+</html>
+

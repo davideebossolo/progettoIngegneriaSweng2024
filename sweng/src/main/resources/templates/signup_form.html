@@ -14,49 +14,72 @@
     <h2>Register here</h2>
 </div>
 <div>
-    <form th:action="@{registration}" method="post"
-          style="max-width: 900px; margin: 0 auto;"
-          th:object="${user}">
-<!-- then specify the rows in the form-->
-        <div class="m-3">
-            <div class="mb-3">
-                <label class="col-form-label col-4">Email</label>
-                <div class="col-8">
-                    <input type="email" class="form-control" th:field="*{email}" required minlength="12"
-                           maxlength="40"/>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="col-form-label col-4">First Name</label>
-                <div class="col-8">
-                    <input type="text" class="form-control" th:field="*{firstName}" required minlength="4"
-                           maxlength="20" />
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="col-form-label col-4">Second Name</label>
-                <div class="col-8">
-                    <input type="text" class="form-control" th:field="*{secondName}" required minlength="4"
-                           maxlength="20"/>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="col-form-label col-4">Password</label>
-                <div class="col-8">
-                    <input type="password" class="form-control" th:field="*{password}" required minlength="6"
-                    maxlength="10"
-                    />
-                </div>
+    <form action="/registration" method="post">
+        <!-- Existing user fields -->
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <div>
+            <label>First Name:</label>
+            <input type="text" name="firstName" required>
+        </div>
+        <div>
+            <label>Last Name:</label>
+            <input type="text" name="lastName" required>
+        </div>
+        <!-- New payment fields
+        <div>
+            <label>
+                <input type="checkbox" name="premium" id="premium" value="true">
+                I want to become a premium user
+            </label>
+        </div>
+        <div id="paymentFields" style="display:none;">
+            <div>
+                <label>Card Holder:</label>
+                <input type="text" name="cardHolder">
             </div>
             <div>
-                <button type="submit" class="btn btn-primary align-self-center" >Sign Up</button>
+                <label>Card Number:</label>
+                <input type="text" name="cardNumber">
             </div>
+            <div>
+                <label>CVV:</label>
+                <input type="text" name="cvv">
+            </div>
+            <div>
+                <label>Expire Date:</label>
+                <input type="text" name="expireDate">
+            </div>
+            <div>
+                <label>Amount:</label>
+                <input type="number" name="amount" value="100"> Amount can be set as needed
+            </div>
+
+        </div>-->
+        <div>
+            <button type="submit">Register</button>
         </div>
-
-
     </form>
-</div>
+
+     <script>
+
+     document.getElementById('premium').addEventListener('change', function() {
+         var paymentFields = document.getElementById('paymentFields');
+         if (this.checked) {
+             paymentFields.style.display = 'block';
+         } else {
+             paymentFields.style.display = 'none';
+         }
+     });
+ </script>
+ </div>
 
 
-</body>
-</html>
+ </body>
+ </html>

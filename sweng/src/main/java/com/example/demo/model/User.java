@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -18,25 +16,16 @@ public class User {
     private String secondName;
     @Column(nullable = false,length = 70)
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Roles> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(Long id, String email, String firstName, String secondName, String password,
-                Set<Roles> roles) {
+    public User(Long id, String email, String firstName, String secondName, String password) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.secondName = secondName;
         this.password = password;
-        this.roles = roles;
     }
 
     public Long getId() {
@@ -79,15 +68,4 @@ public class User {
         this.password = password;
     }
 
-    public Set<Roles> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Roles> roles) {
-        this.roles = roles;
-    }
-    //create a new method for adding roles to this user
-    public void addRole(Roles roles){
-        this.roles.add(roles);
-    }
 }

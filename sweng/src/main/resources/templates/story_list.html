@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Stories</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Stories</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="story : ${stories}">
+        <td th:text="${story.id}">1</td>
+        <td th:text="${story.title}">Sample Story</td>
+        <td>
+            <a th:href="@{/stories/view/{id}(id=${story.id})}">View</a> |
+            <a th:href="@{/stories/edit/{id}(id=${story.id})}">Edit</a> |
+            <a th:href="@{/stories/delete/{id}(id=${story.id})}" onclick="return confirm('Are you sure you want to delete this story?');">Delete</a> |
+            <a th:href="@{/inventories/view/{id}(id=${story.inventory.id})}">View Inventory</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<a th:href="@{/stories/new}" class="button">Add New Story</a>
+</body>
+</html>
