@@ -1,21 +1,17 @@
 package com.example.demo.model;
 
-public class PaymentRequest {
-    private double amount;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+@Entity
+@PrimaryKeyJoinColumn(name = "user_id")
+public class PremiumUser extends com.example.demo.model.User {
     private String cardHolder;
     private String cardNumber;
     private String expireDate;
     private String cvv;
 
     // Getters and Setters
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
 
     public String getCardHolder() {
         return cardHolder;
@@ -49,3 +45,4 @@ public class PaymentRequest {
         this.cvv = cvv;
     }
 }
+

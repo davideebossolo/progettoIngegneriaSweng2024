@@ -3,37 +3,46 @@ package com.example.demo.services;
 import com.example.demo.model.PaymentRequest;
 import com.example.demo.model.PaymentResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
+@Service
 public class PaymentService {
-    private static final String PAYMENT_ENDPOINT = "http://localhost:6789/pay";
 
-    public PaymentResponse processPayment(PaymentRequest paymentRequest) throws IOException {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(PAYMENT_ENDPOINT);
+    private static final String PAYMENT_URL = "http://localhost:6789/pay";
+    private final HttpClient client = HttpClient.newHttpClient();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBody = objectMapper.writeValueAsString(paymentRequest);
+    public PaymentResponse processPayment(PaymentRequest paymentRequest) {
+        try {
+            String requestBody = objectMapper.writeValueAsString(paymentRequest);
 
-        StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
-        httpPost.setEntity(requestEntity);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(PAYMENT_URL))
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .header("Content-Type", "application/json")
+                    .build();
 
-        CloseableHttpResponse response = httpClient.execute(httpPost);
-        HttpEntity entity = response.getEntity();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        PaymentResponse paymentResponse = objectMapper.readValue(entity.getContent(), PaymentResponse.class);
-
-        response.close();
-        httpClient.close();
-
-        return paymentResponse;
+            int status = response.statusCode();
+            if (status > 299) {
+                System.out.println("Something went wrong. Status code: " + status +". The response is the following:");
+                System.out.println(response.body());
+                return new PaymentResponse("Fallito", paymentRequest.getAmount(), 0.0, "Payment failed");
+            } else {
+                System.out.println("Everything went well. The response is the following:");
+                System.out.println(response.body());
+                return objectMapper.readValue(response.body(), PaymentResponse.class);
+            }
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Fatal error from the client side: " + e.getMessage());
+            return new PaymentResponse("Fallito", paymentRequest.getAmount(), 0.0, "Payment request failed");
+        }
     }
 }
