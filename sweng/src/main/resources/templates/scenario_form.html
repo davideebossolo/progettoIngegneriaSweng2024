@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Create/Edit Scenario</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-</head>
-<body>
-<h1 th:text="${scenario.id == null ? 'Create Scenario' : 'Edit Scenario'}"></h1>
-<form th:action="@{/scenarios}" th:object="${scenario}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <div>
-        <label for="description">Description:</label>
-        <textarea id="description" th:field="*{description}"></textarea>
-    </div>
-    <div>
-        <button type="submit">Save</button>
-    </div>
-</form>
-</body>
-</html>
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Create/Edit Scenario</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+    </head>
+    <body>
+    <h1 th:text="${scenario.id == null ? 'Create Scenario' : 'Edit Scenario'}"></h1>
+    <form th:action="@{/scenarios}" th:object="${scenario}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}"></textarea>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+    </body>
+    </html>
 

@@ -18,6 +18,12 @@
     <textarea id="nextScenario" th:field="*{nextScenario.description}"></textarea>
   </div>
   <div>
+    <label for="requiredItem">Required Item:</label>
+    <select id="requiredItem" th:field="*{requiredItem}">
+      <option th:each="item : ${items}" th:value="${item}" th:text="${item.name}"></option>
+    </select>
+  </div>
+  <div>
     <button type="submit">Save</button>
   </div>
 </form>
